@@ -37,8 +37,17 @@ export const CircularSpiderWeb: React.FC<{ className?: string; delay?: number }>
       fill="none"
       aria-hidden="true"
       initial={{ scale: 0, opacity: 0, rotate: -25 }}
-      animate={{ scale: [0, 1.12, 1], opacity: 0.92, rotate: 0 }}
-      transition={{ duration: 0.36, delay, ease: [0.16, 1, 0.3, 1] }}
+      animate={{
+        scale: [0, 1.12, 1, 1, 0.85],
+        opacity: [0, 0.92, 0.92, 0.92, 0],
+        rotate: [-25, 0, 0, 0, 8],
+      }}
+      transition={{
+        duration: 0.68,
+        delay,
+        times: [0, 0.22, 0.4, 0.76, 1],
+        ease: [0.16, 1, 0.3, 1],
+      }}
       className={`pointer-events-none select-none ${className}`}
     >
       <g stroke="#FFFFFF" strokeLinecap="round" strokeLinejoin="round">

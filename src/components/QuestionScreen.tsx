@@ -86,22 +86,24 @@ export const QuestionScreen: React.FC<QuestionScreenProps> = ({
         const optRect = optEl.getBoundingClientRect();
 
         if (isAnswerCorrect === true) {
-          // Alvo: encima da resposta correta (lado direito da cápsula verde para não cobrir o texto)
-          const targetClientX = optRect.right - Math.min(72, optRect.width * 0.16);
-          const targetClientY = optRect.top + optRect.height * 0.42;
+          // Alvo da teia: borda esquerda do form correto; boneco para na borda sem cobrir o texto
+          const targetWebX = optRect.left + 8;
+          const targetWebY = optRect.top + optRect.height * 0.5;
+          const targetMascotX = optRect.left - 4;
+          const targetMascotY = optRect.top + optRect.height * 0.5;
 
           nextLines.push({
             id: opt.id,
             x1: handStartX,
             y1: handStartY,
-            x2: targetClientX - stageRect.left,
-            y2: targetClientY - stageRect.top,
+            x2: targetWebX - stageRect.left,
+            y2: targetWebY - stageRect.top,
           });
 
           if (!firstPullTarget) {
             firstPullTarget = {
-              x: targetClientX - mascotCenterX,
-              y: targetClientY - mascotCenterY,
+              x: targetMascotX - mascotCenterX,
+              y: targetMascotY - mascotCenterY,
             };
           }
         } else if (isAnswerCorrect === false) {
@@ -121,7 +123,22 @@ export const QuestionScreen: React.FC<QuestionScreenProps> = ({
         }
       });
 
-      setWebLines(nextLines);
+      setWebLines((prev) => {
+        if (
+          prev.length === nextLines.length &&
+          prev.every(
+            (l, idx) =>
+              l.id === nextLines[idx].id &&
+              Math.abs(l.x1 - nextLines[idx].x1) < 2 &&
+              Math.abs(l.y1 - nextLines[idx].y1) < 2 &&
+              Math.abs(l.x2 - nextLines[idx].x2) < 2 &&
+              Math.abs(l.y2 - nextLines[idx].y2) < 2,
+          )
+        ) {
+          return prev;
+        }
+        return nextLines;
+      });
       setPullOffset((prev) => {
         if (!firstPullTarget) return null;
         if (
@@ -209,35 +226,111 @@ export const QuestionScreen: React.FC<QuestionScreenProps> = ({
               aria-hidden="true"
               className="pointer-events-none absolute inset-0 w-full h-full z-25 overflow-visible"
             >
-              {webLines.map((line, i) => (
-                <g key={line.id}>
-                  <motion.line
-                    x1={line.x1}
-                    y1={line.y1}
-                    x2={line.x2}
-                    y2={line.y2}
-                    stroke="#FFFFFF"
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                    initial={{ pathLength: 0, opacity: 0.95 }}
-                    animate={{ pathLength: 1, opacity: 0.95 }}
-                    transition={{ duration: 0.22, delay: i * 0.05, ease: 'easeOut' }}
-                  />
-                  <motion.line
-                    x1={line.x1}
-                    y1={line.y1}
-                    x2={line.x2}
-                    y2={line.y2}
-                    stroke="#06C8E8"
-                    strokeWidth="1.5"
-                    strokeDasharray="6 4"
-                    strokeLinecap="round"
-                    initial={{ pathLength: 0, opacity: 0.85 }}
-                    animate={{ pathLength: 1, opacity: 0.85 }}
-                    transition={{ duration: 0.22, delay: i * 0.05, ease: 'easeOut' }}
-                  />
-                </g>
-              ))}
+              {webLines.map((line, i) =>
+                isAnswerCorrect === true ? (
+                  <g key={line.id}>
+                    <motion.line
+                      stroke="#FFFFFF"
+                      strokeWidth="3.5"
+                      strokeLinecap="round"
+                      initial={{
+                        x1: line.x1,
+                        y1: line.y1,
+                        x2: line.x1,
+                        y2: line.y1,
+                        opacity: 0.95,
+                      }}
+                      animate={{
+                        x1: [
+                          line.x1,
+                          line.x1,
+                          line.x1 + (line.x2 - line.x1) * 0.42,
+                          line.x2,
+                        ],
+                        y1: [
+                          line.y1,
+                          line.y1,
+                          line.y1 + (line.y2 - line.y1) * 0.52,
+                          line.y2,
+                        ],
+                        x2: [line.x1, line.x2, line.x2, line.x2],
+                        y2: [line.y1, line.y2, line.y2, line.y2],
+                        opacity: [0.95, 0.95, 0.85, 0],
+                      }}
+                      transition={{
+                        duration: 0.85,
+                        delay: i * 0.05,
+                        times: [0, 0.28, 0.62, 1],
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                    />
+                    <motion.line
+                      stroke="#06C8E8"
+                      strokeWidth="1.5"
+                      strokeDasharray="6 4"
+                      strokeLinecap="round"
+                      initial={{
+                        x1: line.x1,
+                        y1: line.y1,
+                        x2: line.x1,
+                        y2: line.y1,
+                        opacity: 0.85,
+                      }}
+                      animate={{
+                        x1: [
+                          line.x1,
+                          line.x1,
+                          line.x1 + (line.x2 - line.x1) * 0.42,
+                          line.x2,
+                        ],
+                        y1: [
+                          line.y1,
+                          line.y1,
+                          line.y1 + (line.y2 - line.y1) * 0.52,
+                          line.y2,
+                        ],
+                        x2: [line.x1, line.x2, line.x2, line.x2],
+                        y2: [line.y1, line.y2, line.y2, line.y2],
+                        opacity: [0.85, 0.85, 0.75, 0],
+                      }}
+                      transition={{
+                        duration: 0.85,
+                        delay: i * 0.05,
+                        times: [0, 0.28, 0.62, 1],
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                    />
+                  </g>
+                ) : (
+                  <g key={line.id}>
+                    <motion.line
+                      x1={line.x1}
+                      y1={line.y1}
+                      x2={line.x2}
+                      y2={line.y2}
+                      stroke="#FFFFFF"
+                      strokeWidth="3.5"
+                      strokeLinecap="round"
+                      initial={{ pathLength: 0, opacity: 0.95 }}
+                      animate={{ pathLength: 1, opacity: 0.95 }}
+                      transition={{ duration: 0.22, delay: i * 0.05, ease: 'easeOut' }}
+                    />
+                    <motion.line
+                      x1={line.x1}
+                      y1={line.y1}
+                      x2={line.x2}
+                      y2={line.y2}
+                      stroke="#06C8E8"
+                      strokeWidth="1.5"
+                      strokeDasharray="6 4"
+                      strokeLinecap="round"
+                      initial={{ pathLength: 0, opacity: 0.85 }}
+                      animate={{ pathLength: 1, opacity: 0.85 }}
+                      transition={{ duration: 0.22, delay: i * 0.05, ease: 'easeOut' }}
+                    />
+                  </g>
+                ),
+              )}
             </svg>
           )}
 
@@ -311,8 +404,8 @@ export const QuestionScreen: React.FC<QuestionScreenProps> = ({
                       >
                         {isRevealed && option.isCorrect && isAnswerCorrect === true && (
                           <CircularSpiderWeb
-                            className="absolute right-10 sm:right-14 top-1/2 -translate-y-1/2 w-16 h-16 sm:w-22 sm:h-22 opacity-85"
-                            delay={0.16}
+                            className="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-18 sm:h-18 opacity-85"
+                            delay={0.2}
                           />
                         )}
                         {isRevealed && option.isCorrect && isAnswerCorrect === false && (

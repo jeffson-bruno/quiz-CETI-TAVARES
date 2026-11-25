@@ -240,26 +240,26 @@ export const SpideyPullingHero: React.FC<{
       animate={
         pullOffset
           ? {
-              x: [0, 0, targetX],
-              y: [0, 0, targetY],
-              scale: [1, 1.05, 0.85],
-              rotate: [0, -8, 0],
+              x: [0, 0, targetX * 0.42, targetX],
+              y: [0, 0, targetY * 0.52, targetY],
+              scale: [1, 1.04, 0.86, 0.68],
+              rotate: [0, -6, 6, 0],
             }
-          : { x: 0, y: 0, scale: [1, 1.05, 1] }
+          : { x: 0, y: 0, scale: [1, 1.04, 1] }
       }
       transition={{
-        duration: 0.65,
-        times: [0, 0.34, 1],
-        ease: [0.16, 1, 0.3, 1],
+        duration: 0.85,
+        times: [0, 0.28, 0.62, 1],
+        ease: [0.22, 1, 0.36, 1],
       }}
       className={`relative w-full h-full flex items-center justify-center ${className}`}
     >
-      {/* Brilho ciano ao pousar encima da resposta certa */}
+      {/* Brilho ciano ao pousar na borda esquerda da resposta certa */}
       <motion.div
         aria-hidden="true"
         initial={{ opacity: 0, scale: 0.4 }}
-        animate={{ opacity: [0, 0, 0.85, 0], scale: [0.4, 0.4, 1.3, 1.5] }}
-        transition={{ duration: 0.75, times: [0, 0.7, 0.88, 1] }}
+        animate={{ opacity: [0, 0, 0.85, 0], scale: [0.4, 0.4, 1.2, 1.4] }}
+        transition={{ duration: 0.9, times: [0, 0.72, 0.88, 1] }}
         className="absolute inset-0 rounded-full bg-[#06C8E8]/35 blur-md pointer-events-none"
       />
 
