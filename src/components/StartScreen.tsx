@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { ArrowLeft } from 'lucide-react';
 import {
   AiBrainHeadWireframe,
   ComputerGearsWireframe,
@@ -8,12 +9,27 @@ import {
 
 interface StartScreenProps {
   onStart: () => void;
+  onBackToBlog?: () => void;
   totalQuestions: number;
 }
 
-export const StartScreen: React.FC<StartScreenProps> = ({ onStart, totalQuestions }) => {
+export const StartScreen: React.FC<StartScreenProps> = ({
+  onStart,
+  onBackToBlog,
+  totalQuestions,
+}) => {
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-[#352D6B] flex flex-col items-center justify-center px-5 py-12">
+      {onBackToBlog && (
+        <button
+          type="button"
+          onClick={onBackToBlog}
+          className="absolute top-5 left-5 sm:top-7 sm:left-8 z-20 inline-flex items-center gap-2 text-sm font-semibold text-white/85 hover:text-white bg-[#282156]/80 hover:bg-[#282156] border border-[#564AA0] px-3.5 py-2 rounded-lg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06C8E8] whitespace-nowrap"
+        >
+          <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+          <span>Voltar ao Portal</span>
+        </button>
+      )}
       {/* Background wavy circuit network */}
       <WavyNetworkLines className="absolute inset-0 w-full h-full" />
 

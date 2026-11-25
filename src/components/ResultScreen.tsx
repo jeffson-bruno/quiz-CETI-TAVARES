@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { CheckCircle2, XCircle, RotateCcw, ListChecks, ChevronUp } from 'lucide-react';
+import { CheckCircle2, XCircle, RotateCcw, ListChecks, ChevronUp, ArrowLeft } from 'lucide-react';
 import { QUIZ_RATINGS, QuizQuestion } from '../data/quizData';
 import {
   AiBrainHeadWireframe,
@@ -20,12 +20,14 @@ interface ResultScreenProps {
   questions: QuizQuestion[];
   records: QuestionAnswerRecord[];
   onRestart: () => void;
+  onBackToBlog?: () => void;
 }
 
 export const ResultScreen: React.FC<ResultScreenProps> = ({
   questions,
   records,
   onRestart,
+  onBackToBlog,
 }) => {
   const [selectedRating, setSelectedRating] = useState<string | null>(null);
   const [showReview, setShowReview] = useState(false);
@@ -178,6 +180,17 @@ export const ResultScreen: React.FC<ResultScreenProps> = ({
                 </>
               )}
             </button>
+
+            {onBackToBlog && (
+              <button
+                type="button"
+                onClick={onBackToBlog}
+                className="inline-flex items-center gap-2 text-white/85 hover:text-white font-semibold text-base px-4 py-3 rounded-2xl transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#06C8E8] whitespace-nowrap"
+              >
+                <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+                <span>Voltar ao Portal</span>
+              </button>
+            )}
           </div>
         </section>
 

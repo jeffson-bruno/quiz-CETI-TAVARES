@@ -1,20 +1,35 @@
 import { useState } from 'react';
 import { MotionConfig } from 'motion/react';
 import { QUIZ_QUESTIONS } from './data/quizData';
+import { CourseBlogPage } from './components/CourseBlogPage';
 import { StartScreen } from './components/StartScreen';
 import { QuestionScreen } from './components/QuestionScreen';
 import { QuestionAnswerRecord, ResultScreen } from './components/ResultScreen';
 
-type QuizPhase = 'start' | 'quiz' | 'result';
+type QuizPhase = 'blog' | 'start' | 'quiz' | 'result';
 
 export default function App() {
-  const [phase, setPhase] = useState<QuizPhase>('start');
+  const [phase, setPhase] = useState<QuizPhase>('blog');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [isRevealed, setIsRevealed] = useState(false);
   const [records, setRecords] = useState<QuestionAnswerRecord[]>([]);
 
   const currentQuestion = QUIZ_QUESTIONS[currentIndex];
+
+  const handleOpenQuiz = () => {
+    setPhase('start');
+    setCurrentIndex(0);
+    setSelectedIds([]);
+    setIsRevealed(false);
+    setRecords([]);
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  };
+
+  const handleBackToBlog = () => {
+    setPhase('blog');
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  };
 
   const handleStart = () => {
     setPhase('quiz');
@@ -93,8 +108,13 @@ export default function App() {
 
   return (
     <MotionConfig reducedMotion="user">
+      {phase === 'blog' && <CourseBlogPage onOpenQuiz={handleOpenQuiz} />}
       {phase === 'start' && (
-        <StartScreen onStart={handleStart} totalQuestions={QUIZ_QUESTIONS.length} />
+        <StartScreen
+          onStart={handleStart}
+          onBackToBlog={handleBackToBlog}
+          totalQuestions={QUIZ_QUESTIONS.length}
+        />
       )}
       {phase === 'quiz' && (
         <QuestionScreen
@@ -115,6 +135,7 @@ export default function App() {
           questions={QUIZ_QUESTIONS}
           records={records}
           onRestart={handleRestart}
+          onBackToBlog={handleBackToBlog}
         />
       )}
     </MotionConfig>
