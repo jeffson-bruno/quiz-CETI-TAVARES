@@ -1,0 +1,6 @@
+{
+  "name": "Quiz — Desenvolvimento de Sistemas",
+  "description": "Quiz interativo e responsivo sobre Desenvolvimento de Sistemas, lógica de programação, desenvolvimento web e tecnologia na sociedade.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

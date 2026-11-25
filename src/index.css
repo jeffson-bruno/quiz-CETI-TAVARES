@@ -1,0 +1,265 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  html,
+  body {
+    background-color: #342c68;
+    color: #ffffff;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+}
+
+.quiz-title-shadow {
+  text-shadow: 6px 6px 0px rgba(255, 255, 255, 0.28), 10px 10px 18px rgba(17, 12, 46, 0.45);
+}
+
+.quiz-subtitle-shadow {
+  text-shadow: 2px 3px 0px rgba(17, 12, 46, 0.45);
+}
+
+.halftone-card {
+  background-color: #282156;
+  background-image: radial-gradient(rgba(18, 13, 48, 0.72) 42%, transparent 45%);
+  background-size: 28px 28px;
+}
+
+.outer-dot-grid {
+  background-image: radial-gradient(rgba(30, 23, 72, 0.55) 2px, transparent 2px);
+  background-size: 28px 28px;
+}
+
+@keyframes bg-lines-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1.03);
+  }
+  50% {
+    transform: translate3d(-14px, 10px, 0) scale(1.06);
+  }
+}
+
+@keyframes bg-lines-flow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -420;
+  }
+}
+
+@keyframes cta-pulse-scale {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes cta-pulse-ring {
+  0% {
+    transform: scale(0.96);
+    opacity: 0.65;
+  }
+  70% {
+    transform: scale(1.16, 1.32);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.16, 1.32);
+    opacity: 0;
+  }
+}
+
+@keyframes float-right-side {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(-12px, 14px, 0) rotate(-2.5deg);
+  }
+}
+
+@keyframes float-left-side {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(12px, -12px, 0) rotate(2.5deg);
+  }
+}
+
+@keyframes spin-gear-cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-gear-ccw {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes char-bob {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -6px, 0) rotate(-1.5deg);
+  }
+}
+
+@keyframes char-sad {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, 5px, 0) rotate(-3deg);
+  }
+}
+
+@keyframes char-present {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(-4px, -6px, 0) rotate(-2deg);
+  }
+}
+
+@keyframes qmark-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(2px, -7px, 0) rotate(6deg);
+  }
+}
+
+@keyframes ray-pulse {
+  0%,
+  100% {
+    opacity: 0.95;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes tear-drop {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    opacity: 0.95;
+  }
+  85% {
+    opacity: 0.85;
+    transform: translate3d(0, 14px, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+}
+
+.animate-bg-lines-drift {
+  animation: bg-lines-drift 12s ease-in-out infinite;
+}
+
+.animate-bg-lines-flow {
+  animation: bg-lines-flow 9s linear infinite;
+}
+
+.animate-cta-pulse {
+  animation: cta-pulse-scale 1.8s ease-in-out infinite;
+}
+
+.animate-cta-ring {
+  animation: cta-pulse-ring 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.animate-float-right {
+  animation: float-right-side 5.5s ease-in-out infinite;
+}
+
+.animate-float-left {
+  animation: float-left-side 6s ease-in-out infinite;
+}
+
+.animate-spin-cw {
+  animation: spin-gear-cw 10s linear infinite;
+}
+
+.animate-spin-ccw {
+  animation: spin-gear-ccw 7.5s linear infinite;
+}
+
+.animate-char-bob {
+  animation: char-bob 2.6s ease-in-out infinite;
+}
+
+.animate-char-sad {
+  animation: char-sad 2.8s ease-in-out infinite;
+}
+
+.animate-char-present {
+  animation: char-present 2.4s ease-in-out infinite;
+}
+
+.animate-qmark-float {
+  animation: qmark-float 2s ease-in-out infinite;
+}
+
+.animate-ray-pulse {
+  transform-origin: center;
+  animation: ray-pulse 1.2s ease-in-out infinite;
+}
+
+.animate-tear-drop {
+  animation: tear-drop 1.8s ease-in infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-bg-lines-drift,
+  .animate-bg-lines-flow,
+  .animate-cta-pulse,
+  .animate-cta-ring,
+  .animate-float-right,
+  .animate-float-left,
+  .animate-spin-cw,
+  .animate-spin-ccw,
+  .animate-char-bob,
+  .animate-char-sad,
+  .animate-char-present,
+  .animate-qmark-float,
+  .animate-ray-pulse,
+  .animate-tear-drop {
+    animation: none;
+  }
+}
